@@ -13,12 +13,11 @@ import javax.validation.constraints.Size;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDto {
 
-    public interface UserView{
-        public static interface RegistrationPost{}
-        public static interface UserPut{}
-        public static interface PasswordPut{}
-        public static interface ImagePut{}
-
+    public interface UserView {
+        public static interface RegistrationPost {}
+        public static interface UserPut {}
+        public static interface PasswordPut {}
+        public static interface ImagePut {}
     }
 
     @NotBlank(groups = UserView.RegistrationPost.class)
@@ -33,7 +32,7 @@ public class UserDto {
     private String email;
 
     @NotBlank(groups = {UserView.RegistrationPost.class, UserView.PasswordPut.class})
-    @Size(min = 6, max = 20, groups = {UserView.RegistrationPost.class,  UserView.RegistrationPost.class})
+    @Size(min = 6, max = 20, groups = {UserView.RegistrationPost.class, UserView.PasswordPut.class})
     @JsonView({UserView.RegistrationPost.class, UserView.PasswordPut.class})
     private String password;
 
@@ -42,6 +41,8 @@ public class UserDto {
     @JsonView({UserView.PasswordPut.class})
     private String oldPassword;
 
+    @NotBlank(groups = {UserView.RegistrationPost.class, UserView.UserPut.class})
+    @Size(max = 150, groups = {UserView.RegistrationPost.class, UserView.UserPut.class})
     @JsonView({UserView.RegistrationPost.class, UserView.UserPut.class})
     private String fullName;
 
@@ -54,4 +55,5 @@ public class UserDto {
     @NotBlank(groups = UserView.ImagePut.class)
     @JsonView({UserView.ImagePut.class})
     private String imageUrl;
+
 }
