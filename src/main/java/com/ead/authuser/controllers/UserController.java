@@ -73,7 +73,7 @@ public class UserController {
     public ResponseEntity<Object> updateUser(@PathVariable(value = "userId") UUID userId,
                                              @RequestBody @Validated(UserDto.UserView.UserPut.class)
                                              @JsonView(UserDto.UserView.UserPut.class) UserDto userDto){
-        log.debug("PUT updateUser userDto received {} ", userDto.toString());
+        log.debug("PUT updateUser userDto received userId {} ", userId);
         Optional<UserModel> userModelOptional = userService.findById(userId);
         if(!userModelOptional.isPresent()){
             return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
@@ -84,7 +84,7 @@ public class UserController {
             userModel.setCpf(userDto.getCpf());
             userModel.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
             userService.save(userModel);
-            log.debug("PUT updateUser userModel saved {} ", userModel.toString());
+            log.debug("PUT updateUser userModel userId {} ", userModel.getUserId());
             log.info("User updated successfully userId {} ", userModel.getUserId());
             return  ResponseEntity.status(HttpStatus.OK).body(userModel);
         }
